@@ -1,7 +1,7 @@
 // Service Worker - Apex Quant Deportes v1.0
 // Solo guarda la "carcasa" (pestañas e iconos). Las apps de fútbol y baloncesto
 // se cargan siempre frescas desde sus propias webs.
-const CACHE_NAME = 'apex-deportes-v1.1';
+const CACHE_NAME = 'apex-deportes-v1.2';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
