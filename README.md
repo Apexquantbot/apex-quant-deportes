@@ -10,7 +10,7 @@ Cada bot sigue funcionando por su lado (sus datos, su canal de Telegram y su cro
 
 | Sección | Repositorio | Web |
 |---|---|---|
-| Fútbol | franciscoserranoadt/bot-quant-futbol | https://franciscoserranoadt.github.io/bot-quant-futbol/ |
+| Fútbol | Apexquantbot/bot-quant-futbol | https://apexquantbot.github.io/bot-quant-futbol/ |
 | Baloncesto | Apexquantbot/apex-quant-baloncesto | https://apexquantbot.github.io/apex-quant-baloncesto/ |
 
 Cualquier cambio que se haga en la web de fútbol o en la de baloncesto aparece aquí solo, sin tocar nada.
