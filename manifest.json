@@ -2,7 +2,7 @@
   "id": "/apex-quant-deportes/",
   "name": "Apex Quant Deportes",
   "short_name": "ApexDeportes",
-  "description": "Pronósticos cuantitativos +EV de fútbol y baloncesto en una sola app",
+  "description": "Pronósticos cuantitativos +EV de fútbol, basket y tenis en una sola app",
   "lang": "es",
   "start_url": "./index.html",
   "scope": "./",

@@ -15,7 +15,7 @@
        Apex Quant Deportes
        Una sola app con tres secciones independientes:
          - Fútbol     -> la web del bot de fútbol
-         - Baloncesto -> la web del bot de baloncesto
+         - Basket     -> la web del bot de basket
          - Tenis      -> la web del bot de tenis
        Cada bot sigue en su propio repositorio, con sus datos,
        su canal de Telegram y su cron. Esta app solo las junta.
@@ -141,8 +141,8 @@
       <button class="pestana" role="tab" data-deporte="futbol" aria-selected="false" title="Fútbol">
         <span class="ico">⚽</span><span class="txt">Fútbol</span>
       </button>
-      <button class="pestana" role="tab" data-deporte="baloncesto" aria-selected="false" title="Baloncesto">
-        <span class="ico">🏀</span><span class="txt">Baloncesto</span>
+      <button class="pestana" role="tab" data-deporte="basket" aria-selected="false" title="Basket">
+        <span class="ico">🏀</span><span class="txt">Basket</span>
       </button>
       <button class="pestana" role="tab" data-deporte="tenis" aria-selected="false" title="Tenis">
         <span class="ico">🎾</span><span class="txt">Tenis</span>
@@ -166,11 +166,11 @@
     // ------------------------------------------------------------
     const APPS = {
       futbol:     'https://apexquantbot.github.io/bot-quant-futbol/',
-      baloncesto: 'https://apexquantbot.github.io/apex-quant-baloncesto/',
+      basket:     'https://apexquantbot.github.io/apex-quant-baloncesto/',
       tenis:      'https://apexquantbot.github.io/apex_quant_tenis/'
     };
-    const TITULOS = { futbol: 'Apex Quant Fútbol', baloncesto: 'Apex Quant Baloncesto', tenis: 'Apex Quant Tenis' };
-    const ORDEN = ['futbol', 'baloncesto', 'tenis'];
+    const TITULOS = { futbol: 'Apex Quant Fútbol', basket: 'Apex Quant Basket', tenis: 'Apex Quant Tenis' };
+    const ORDEN = ['futbol', 'basket', 'tenis'];
     const CLAVE = 'apexDeportes.ultimo';
 
     const zona   = document.getElementById('zona');
@@ -227,6 +227,7 @@
     }
 
     function abrir(d) {
+      if (d === 'baloncesto') d = 'basket';   // nombre antiguo
       if (!APPS[d]) d = 'futbol';
       actual = d;
       document.querySelectorAll('.pestana').forEach(b =>
@@ -254,7 +255,7 @@
     avisoB.addEventListener('click', recargar);
     window.addEventListener('online', () => { if (!cargado[actual]) recargar(); });
 
-    // Arranque: #futbol / #baloncesto / #tenis en la dirección, o la última pestaña usada
+    // Arranque: #futbol / #basket / #tenis en la dirección, o la última pestaña usada (#baloncesto sigue valiendo)
     const inicial = location.hash.replace('#', '') || leerUltimo() || 'futbol';
     abrir(inicial);
 
