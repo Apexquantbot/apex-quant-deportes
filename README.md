@@ -12,7 +12,7 @@ Cada bot sigue funcionando por su lado (sus datos, su canal de Telegram y su cro
 |---|---|---|
 | Fútbol | Apexquantbot/bot-quant-futbol | https://apexquantbot.github.io/bot-quant-futbol/ |
 | Baloncesto | Apexquantbot/apex-quant-baloncesto | https://apexquantbot.github.io/apex-quant-baloncesto/ |
-| Tenis | Apexquantbot/apex-quant-tenis | https://apexquantbot.github.io/apex-quant-tenis/ |
+| Tenis | Apexquantbot/apex_quant_tenis | https://apexquantbot.github.io/apex_quant_tenis/ |
 
 Cualquier cambio que se haga en la web de un deporte aparece aquí solo, sin tocar nada.
 Si algún día cambia la dirección de una de ellas, se actualiza en `index.html` (bloque `APPS`).
