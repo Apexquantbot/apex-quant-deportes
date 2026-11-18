@@ -13,10 +13,11 @@
   <style>
     /* ============================================================
        Apex Quant Deportes
-       Una sola app con tres secciones independientes:
+       Una sola app con cuatro secciones independientes:
          - Fútbol     -> la web del bot de fútbol
          - Basket     -> la web del bot de basket
          - Tenis      -> la web del bot de tenis
+         - Hockey     -> la web del bot de hockey (NHL)
        Cada bot sigue en su propio repositorio, con sus datos,
        su canal de Telegram y su cron. Esta app solo las junta.
        ============================================================ */
@@ -67,11 +68,15 @@
       color: #04121f;
       box-shadow: 0 2px 12px rgba(0, 245, 155, .25);
     }
-    /* Móvil estrecho: con tres pestañas, la palabra solo en la elegida */
-    @media (max-width: 400px) and (orientation: portrait) {
+    /* Móvil: con cuatro pestañas, la palabra solo en la elegida */
+    @media (max-width: 520px) and (orientation: portrait) {
       .pestana { font-size: 13px; gap: 5px; }
       .pestana[aria-selected="false"] .txt { display: none; }
-      .pestana[aria-selected="false"] { flex: 0 0 52px; }
+      .pestana[aria-selected="false"] { flex: 0 0 48px; }
+    }
+    @media (max-width: 360px) and (orientation: portrait) {
+      .pestana[aria-selected="false"] { flex: 0 0 40px; }
+      .pestana .ico { font-size: 16px; }
     }
     .recargar {
       flex: 0 0 auto; width: 44px; height: 44px;
@@ -124,13 +129,19 @@
         border-bottom: 0; border-right: 1px solid var(--borde);
       }
       .pestanas { flex: 0 0 auto; flex-direction: column; width: 100%; }
-      .pestana { flex-direction: column; gap: 5px; padding: 12px 2px; font-size: 11px; }
+      .pestana { flex-direction: column; gap: 5px; padding: 10px 2px; font-size: 11px; }
       .pestana .ico { font-size: 22px; }
       .recargar { width: 100%; }
     }
+    /* Pantallas apaisadas muy bajas (coche): pestañas más compactas para que quepan las cuatro */
+    @media (orientation: landscape) and (max-height: 420px) {
+      .pestana { padding: 7px 2px; gap: 3px; font-size: 10px; }
+      .pestana .ico { font-size: 19px; }
+      .recargar { height: 38px; }
+    }
     /* Tablet grande en apaisado: barra arriba, pestañas centradas */
     @media (orientation: landscape) and (min-height: 641px) {
-      .pestanas { max-width: 640px; margin: 0 auto; }
+      .pestanas { max-width: 760px; margin: 0 auto; }
     }
   </style>
 </head>
@@ -146,6 +157,9 @@
       </button>
       <button class="pestana" role="tab" data-deporte="tenis" aria-selected="false" title="Tenis">
         <span class="ico">🎾</span><span class="txt">Tenis</span>
+      </button>
+      <button class="pestana" role="tab" data-deporte="hockey" aria-selected="false" title="Hockey">
+        <span class="ico">🏒</span><span class="txt">Hockey</span>
       </button>
     </nav>
     <button class="recargar" id="recargar" aria-label="Recargar" title="Recargar"><span>↻</span></button>
@@ -167,10 +181,11 @@
     const APPS = {
       futbol:     'https://apexquantbot.github.io/bot-quant-futbol/',
       basket:     'https://apexquantbot.github.io/apex-quant-baloncesto/',
-      tenis:      'https://apexquantbot.github.io/apex_quant_tenis/'
+      tenis:      'https://apexquantbot.github.io/apex_quant_tenis/',
+      hockey:     'https://apexquantbot.github.io/apex-quant-hockey/'
     };
-    const TITULOS = { futbol: 'Apex Quant Fútbol', basket: 'Apex Quant Basket', tenis: 'Apex Quant Tenis' };
-    const ORDEN = ['futbol', 'basket', 'tenis'];
+    const TITULOS = { futbol: 'Apex Quant Fútbol', basket: 'Apex Quant Basket', tenis: 'Apex Quant Tenis', hockey: 'Apex Quant Hockey' };
+    const ORDEN = ['futbol', 'basket', 'tenis', 'hockey'];
     const CLAVE = 'apexDeportes.ultimo';
 
     const zona   = document.getElementById('zona');
@@ -228,6 +243,7 @@
 
     function abrir(d) {
       if (d === 'baloncesto') d = 'basket';   // nombre antiguo
+      if (d === 'nhl') d = 'hockey';
       if (!APPS[d]) d = 'futbol';
       actual = d;
       document.querySelectorAll('.pestana').forEach(b =>
@@ -255,7 +271,7 @@
     avisoB.addEventListener('click', recargar);
     window.addEventListener('online', () => { if (!cargado[actual]) recargar(); });
 
-    // Arranque: #futbol / #basket / #tenis en la dirección, o la última pestaña usada (#baloncesto sigue valiendo)
+    // Arranque: #futbol / #basket / #tenis / #hockey en la dirección, o la última pestaña usada (#baloncesto sigue valiendo)
     const inicial = location.hash.replace('#', '') || leerUltimo() || 'futbol';
     abrir(inicial);
 

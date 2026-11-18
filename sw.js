@@ -1,7 +1,7 @@
-// Service Worker - Apex Quant Deportes v1.3
-// Solo guarda la "carcasa" (pestañas e iconos). Las apps de fútbol, basket
-// y tenis se cargan siempre frescas desde sus propias webs.
-const CACHE_NAME = 'apex-deportes-v1.4';
+// Service Worker - Apex Quant Deportes v1.4
+// Solo guarda la "carcasa" (pestañas e iconos). Las apps de fútbol, basket,
+// tenis y hockey se cargan siempre frescas desde sus propias webs.
+const CACHE_NAME = 'apex-deportes-v1.4.0';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
@@ -21,7 +21,7 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;   // lo de fuera (las tres apps) pasa directo
+  if (url.origin !== self.location.origin) return;   // lo de fuera (las cuatro apps) pasa directo
   const clave = new Request(url.origin + url.pathname);
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
