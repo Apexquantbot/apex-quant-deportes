@@ -12,7 +12,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     /* ============================================================
-       Apex Quant Deportes
+       Apex Quant Deportes (v1.5)
        Una sola app con cuatro secciones independientes:
          - Fútbol     -> la web del bot de fútbol
          - Basket     -> la web del bot de basket
@@ -20,6 +20,7 @@
          - Hockey     -> la web del bot de hockey (NHL)
        Cada bot sigue en su propio repositorio, con sus datos,
        su canal de Telegram y su cron. Esta app solo las junta.
+       Botón 🔔: avisos al móvil de los cuatro deportes (avisos.py).
        ============================================================ */
     :root {
       --bg: #070e1d;
@@ -73,20 +74,29 @@
       .pestana { font-size: 13px; gap: 5px; }
       .pestana[aria-selected="false"] .txt { display: none; }
       .pestana[aria-selected="false"] { flex: 0 0 48px; }
+      .barra { gap: 6px; padding-left: 8px; padding-right: 8px; }
+      .recargar { width: 40px; }
     }
     @media (max-width: 360px) and (orientation: portrait) {
-      .pestana[aria-selected="false"] { flex: 0 0 40px; }
+      .pestana[aria-selected="false"] { flex: 0 0 38px; }
       .pestana .ico { font-size: 16px; }
+      .recargar { width: 36px; }
     }
     .recargar {
-      flex: 0 0 auto; width: 44px; height: 44px;
+      flex: 0 0 auto; width: 44px; height: 44px; position: relative;
       border: 1px solid var(--borde); border-radius: 12px;
       background: var(--bg); color: var(--verde);
       font-size: 20px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
+    .acciones { flex: 0 0 auto; display: flex; gap: 6px; }
     .recargar.girando span { display: inline-block; animation: giro .7s linear; }
     @keyframes giro { to { transform: rotate(360deg); } }
+    /* Punto verde en la campana cuando los avisos están activados */
+    .campana.activa::after {
+      content: ''; position: absolute; top: 7px; right: 7px; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--verde); box-shadow: 0 0 6px var(--verde);
+    }
 
     /* ---------- Zona de las apps ---------- */
     .zona { flex: 1 1 auto; position: relative; min-height: 0; }
@@ -110,11 +120,55 @@
       border: 3px solid var(--borde); border-top-color: var(--verde);
       animation: giro .8s linear infinite;
     }
-    .aviso button {
+    .aviso button, .btn {
       border: 0; border-radius: 10px; padding: 10px 18px; cursor: pointer;
       background: linear-gradient(135deg, var(--verde), var(--cian));
       color: #04121f; font-family: inherit; font-weight: 700; font-size: 14px;
     }
+
+    /* ---------- Panel de avisos ---------- */
+    .panel {
+      position: fixed; inset: 0; z-index: 10; display: none;
+      background: rgba(3, 7, 15, .72); backdrop-filter: blur(3px);
+      align-items: flex-end; justify-content: center;
+    }
+    .panel.visible { display: flex; }
+    .caja {
+      width: 100%; max-width: 520px; max-height: 92dvh; overflow-y: auto;
+      background: var(--bar); border: 1px solid var(--borde); border-bottom: 0;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 18px calc(env(safe-area-inset-bottom, 0px) + 18px);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .caja h2 { font-size: 18px; display: flex; align-items: center; justify-content: space-between; }
+    .caja h2 button { background: none; border: 0; color: var(--apagado); font-size: 24px; cursor: pointer; padding: 0 4px; }
+    .caja p { font-size: 14px; line-height: 1.45; color: var(--apagado); }
+    .caja p b { color: var(--texto); }
+    .estado-av {
+      font-size: 14px; font-weight: 700; padding: 10px 12px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--borde);
+    }
+    .estado-av.ok { color: var(--verde); border-color: rgba(0, 245, 155, .35); }
+    .estado-av.mal { color: #fca5a5; border-color: rgba(252, 165, 165, .35); }
+    .opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .opciones label {
+      display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600;
+      background: var(--bg); border: 1px solid var(--borde); border-radius: 10px; padding: 10px;
+      cursor: pointer;
+    }
+    .opciones label.ancho { grid-column: 1 / -1; }
+    .opciones input { width: 18px; height: 18px; accent-color: var(--verde); }
+    .botones { display: flex; flex-wrap: wrap; gap: 8px; }
+    .botones .btn { flex: 1 1 auto; }
+    .btn.sec { background: var(--bg); color: var(--texto); border: 1px solid var(--borde); }
+    .btn.peligro { background: var(--bg); color: #fca5a5; border: 1px solid rgba(252, 165, 165, .35); }
+    .codigo {
+      width: 100%; height: 92px; resize: none; font-family: ui-monospace, monospace; font-size: 11px;
+      background: var(--bg); color: var(--texto); border: 1px solid var(--borde); border-radius: 10px; padding: 8px;
+      word-break: break-all;
+    }
+    .oculto { display: none !important; }
+
     /* ---------- Apaisado: móvil girado, tablet o pantalla del coche ----------
        Si la pantalla es más ancha que alta y de poca altura, las pestañas pasan
        a una barra vertical a la izquierda y la app aprovecha todo el alto. */
@@ -131,13 +185,16 @@
       .pestanas { flex: 0 0 auto; flex-direction: column; width: 100%; }
       .pestana { flex-direction: column; gap: 5px; padding: 10px 2px; font-size: 11px; }
       .pestana .ico { font-size: 22px; }
+      .acciones { flex-direction: column; width: 100%; }
       .recargar { width: 100%; }
+      .panel { align-items: center; }
+      .caja { border-radius: 20px; border-bottom: 1px solid var(--borde); max-height: 96dvh; }
     }
     /* Pantallas apaisadas muy bajas (coche): pestañas más compactas para que quepan las cuatro */
     @media (orientation: landscape) and (max-height: 420px) {
       .pestana { padding: 7px 2px; gap: 3px; font-size: 10px; }
       .pestana .ico { font-size: 19px; }
-      .recargar { height: 38px; }
+      .recargar { height: 34px; }
     }
     /* Tablet grande en apaisado: barra arriba, pestañas centradas */
     @media (orientation: landscape) and (min-height: 641px) {
@@ -162,7 +219,10 @@
         <span class="ico">🏒</span><span class="txt">Hockey</span>
       </button>
     </nav>
-    <button class="recargar" id="recargar" aria-label="Recargar" title="Recargar"><span>↻</span></button>
+    <div class="acciones">
+      <button class="recargar campana" id="campana" aria-label="Avisos" title="Avisos al móvil"><span>🔔</span></button>
+      <button class="recargar" id="recargar" aria-label="Recargar" title="Recargar"><span>↻</span></button>
+    </div>
   </header>
 
   <main class="zona" id="zona">
@@ -173,10 +233,39 @@
     </div>
   </main>
 
+  <!-- Panel de avisos al móvil -->
+  <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitulo">
+    <div class="caja">
+      <h2 id="panelTitulo">🔔 Avisos al móvil <button id="avCerrar" aria-label="Cerrar">×</button></h2>
+      <div class="estado-av" id="avEstado">Comprobando…</div>
+      <p>Te llega una notificación cuando un bot da una <b>alerta nueva</b> y, si quieres, cuando <b>termina</b> (acertada, fallada o anulada). Funciona aunque la app esté cerrada.</p>
+      <div class="opciones" id="avOpciones">
+        <label><input type="checkbox" value="futbol" checked> ⚽ Fútbol</label>
+        <label><input type="checkbox" value="basket" checked> 🏀 Basket</label>
+        <label><input type="checkbox" value="tenis" checked> 🎾 Tenis</label>
+        <label><input type="checkbox" value="hockey" checked> 🏒 Hockey</label>
+        <label class="ancho"><input type="checkbox" id="avResultados" checked> 🏁 Avisar también de los resultados</label>
+      </div>
+      <div class="botones">
+        <button class="btn" id="avActivar">Activar avisos</button>
+        <button class="btn sec oculto" id="avProbar">Probar aviso</button>
+      </div>
+      <div id="avCodigoZona" class="oculto" style="display:flex;flex-direction:column;gap:10px">
+        <p id="avCodigoTexto"><b>Último paso (solo una vez):</b> copia este código y pégalo en GitHub como secreto <b>APEX_PUSH</b> del repositorio <b>apex-quant-deportes</b>. Las instrucciones están en el README.</p>
+        <textarea class="codigo" id="avCodigo" readonly></textarea>
+        <button class="btn" id="avCopiar">📋 Copiar código</button>
+      </div>
+      <div class="botones">
+        <button class="btn peligro oculto" id="avDesactivar">Desactivar avisos en este móvil</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ------------------------------------------------------------
     // Direcciones de cada app (las webs de GitHub Pages de cada bot).
-    // Si algún día mueves un bot de sitio, solo hay que cambiar aquí.
+    // Si algún día mueves un bot de sitio, solo hay que cambiar aquí
+    // (y en DEPORTES de avisos.py).
     // ------------------------------------------------------------
     const APPS = {
       futbol:     'https://apexquantbot.github.io/bot-quant-futbol/',
@@ -270,6 +359,11 @@
     document.getElementById('recargar').addEventListener('click', recargar);
     avisoB.addEventListener('click', recargar);
     window.addEventListener('online', () => { if (!cargado[actual]) recargar(); });
+    // Al tocar un aviso con la app ya abierta: cambia a la pestaña de ese deporte
+    window.addEventListener('hashchange', () => {
+      const d = location.hash.replace('#', '');
+      if (d && d !== actual) abrir(d);
+    });
 
     // Arranque: #futbol / #basket / #tenis / #hockey en la dirección, o la última pestaña usada (#baloncesto sigue valiendo)
     const inicial = location.hash.replace('#', '') || leerUltimo() || 'futbol';
@@ -282,7 +376,199 @@
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+      navigator.serviceWorker.addEventListener('message', (e) => {
+        if (e.data && e.data.tipo === 'abrir') {
+          try { const h = new URL(e.data.url).hash.replace('#', ''); if (h) abrir(h); } catch (err) {}
+        }
+      });
     }
+
+    // ============================================================
+    // AVISOS AL MÓVIL (notificaciones push)
+    // La app crea sus propias claves y la suscripción del móvil, y lo
+    // junta todo en un código «APEX1.…». Ese código se guarda en GitHub
+    // (secreto APEX_PUSH) y avisos.py lo usa para mandar los avisos.
+    // ============================================================
+    const AV_CLAVE = 'apexDeportes.avisos';
+    const panel = document.getElementById('panel');
+    const campana = document.getElementById('campana');
+    const avEstado = document.getElementById('avEstado');
+    const avActivar = document.getElementById('avActivar');
+    const avProbar = document.getElementById('avProbar');
+    const avDesactivar = document.getElementById('avDesactivar');
+    const avCodigoZona = document.getElementById('avCodigoZona');
+    const avCodigo = document.getElementById('avCodigo');
+    const avCodigoTexto = document.getElementById('avCodigoTexto');
+    const avCopiar = document.getElementById('avCopiar');
+    const avResultados = document.getElementById('avResultados');
+    const casillas = () => [...document.querySelectorAll('#avOpciones input[value]')];
+
+    function avLeer() { try { return JSON.parse(localStorage.getItem(AV_CLAVE)) || {}; } catch (e) { return {}; } }
+    function avGuardar(o) { try { localStorage.setItem(AV_CLAVE, JSON.stringify(o)); } catch (e) {} }
+    function b64u(buf) {
+      const bytes = new Uint8Array(buf); let s = '';
+      for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+      return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+    function deB64u(s) {
+      const t = s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4);
+      return Uint8Array.from(atob(t), c => c.charCodeAt(0));
+    }
+    function soportado() {
+      return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.crypto && crypto.subtle;
+    }
+    function ponerEstado(texto, tipo) {
+      avEstado.textContent = texto;
+      avEstado.className = 'estado-av' + (tipo ? ' ' + tipo : '');
+    }
+    function prefsActuales() {
+      return { d: casillas().filter(c => c.checked).map(c => c.value), r: avResultados.checked ? 1 : 0 };
+    }
+    function codigoDe(sub, cfg) {
+      const p = prefsActuales();
+      const datos = { v: 1, k: cfg.k, s: sub.toJSON(), d: p.d, r: p.r };
+      return 'APEX1.' + b64u(new TextEncoder().encode(JSON.stringify(datos)));
+    }
+    async function suscripcion() {
+      if (!soportado()) return null;
+      const reg = await navigator.serviceWorker.ready;
+      return reg.pushManager.getSubscription();
+    }
+
+    async function refrescarPanel() {
+      const cfg = avLeer();
+      if (cfg.d) casillas().forEach(c => { c.checked = cfg.d.includes(c.value); });
+      if (typeof cfg.r === 'number') avResultados.checked = !!cfg.r;
+      if (!soportado()) {
+        ponerEstado('Este navegador no admite avisos. Abre la app instalada desde Chrome.', 'mal');
+        avActivar.classList.add('oculto'); return;
+      }
+      if (Notification.permission === 'denied') {
+        ponerEstado('Las notificaciones están bloqueadas. Actívalas en Ajustes del móvil → Apps → Chrome (o Apex Deportes) → Notificaciones.', 'mal');
+      }
+      const sub = await suscripcion();
+      const activo = !!(sub && cfg.k && Notification.permission === 'granted');
+      campana.classList.toggle('activa', activo);
+      avProbar.classList.toggle('oculto', !activo);
+      avDesactivar.classList.toggle('oculto', !activo);
+      avActivar.textContent = activo ? 'Ver mi código' : 'Activar avisos';
+      if (activo) {
+        ponerEstado('✅ Avisos activados en este móvil', 'ok');
+      } else if (Notification.permission !== 'denied') {
+        ponerEstado('Avisos desactivados en este móvil');
+        avCodigoZona.classList.add('oculto');
+      }
+    }
+
+    async function activar() {
+      if (!soportado()) return refrescarPanel();
+      if (!prefsActuales().d.length) { ponerEstado('Marca al menos un deporte', 'mal'); return; }
+      avActivar.disabled = true;
+      try {
+        const permiso = await Notification.requestPermission();
+        if (permiso !== 'granted') {
+          ponerEstado('Sin permiso no se pueden mandar avisos. Pulsa «Permitir» cuando el móvil lo pregunte.', 'mal');
+          return;
+        }
+        ponerEstado('Preparando…');
+        const reg = await navigator.serviceWorker.ready;
+        const cfg = avLeer();
+        let sub = await reg.pushManager.getSubscription();
+        if (!cfg.k || !cfg.pub) {
+          // Claves propias de este móvil (la privada solo sale en el código que va a GitHub)
+          const par = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+          cfg.k = (await crypto.subtle.exportKey('jwk', par.privateKey)).d;
+          cfg.pub = b64u(await crypto.subtle.exportKey('raw', par.publicKey));
+          if (sub) { await sub.unsubscribe(); sub = null; }
+        }
+        if (sub && sub.options && sub.options.applicationServerKey && b64u(sub.options.applicationServerKey) !== cfg.pub) {
+          await sub.unsubscribe(); sub = null;
+        }
+        if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: deB64u(cfg.pub) });
+        Object.assign(cfg, prefsActuales());
+        avGuardar(cfg);
+        avCodigo.value = codigoDe(sub, cfg);
+        avCodigoTexto.innerHTML = '<b>Último paso (solo una vez):</b> copia este código y pégalo en GitHub como secreto <b>APEX_PUSH</b> del repositorio <b>apex-quant-deportes</b>. Las instrucciones están en el README.';
+        avCodigoZona.classList.remove('oculto');
+        await refrescarPanel();
+        avCodigoZona.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        ponerEstado('No se han podido activar: ' + (e && e.message ? e.message : e), 'mal');
+      } finally {
+        avActivar.disabled = false;
+      }
+    }
+
+    async function cambioPrefs() {
+      const cfg = avLeer();
+      const sub = await suscripcion();
+      if (!sub || !cfg.k) return;
+      if (!prefsActuales().d.length) { ponerEstado('Marca al menos un deporte', 'mal'); return; }
+      Object.assign(cfg, prefsActuales());
+      avGuardar(cfg);
+      avCodigo.value = codigoDe(sub, cfg);
+      avCodigoTexto.innerHTML = '<b>Has cambiado lo que quieres recibir:</b> copia el código nuevo y pégalo en GitHub en el secreto <b>APEX_PUSH</b> (botón «Update secret»), en lugar del anterior.';
+      avCodigoZona.classList.remove('oculto');
+    }
+
+    async function probar() {
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        await reg.showNotification('🎯 Apex Quant Deportes', {
+          body: 'Así te llegarán los avisos de las alertas ✅', icon: 'icon-192.png', tag: 'prueba', data: { url: './' }
+        });
+      } catch (e) { ponerEstado('No se pudo mostrar la prueba: ' + e.message, 'mal'); }
+    }
+
+    async function desactivar() {
+      if (!confirmarDesactivar()) return;
+      try { const sub = await suscripcion(); if (sub) await sub.unsubscribe(); } catch (e) {}
+      avGuardar({});
+      avCodigo.value = '';
+      avCodigoZona.classList.add('oculto');
+      await refrescarPanel();
+      ponerEstado('Avisos desactivados. Si quieres, borra también el secreto APEX_PUSH en GitHub.');
+    }
+    // Confirmación sin ventanas del navegador: hay que pulsar dos veces
+    let armado = 0;
+    function confirmarDesactivar() {
+      if (Date.now() - armado < 4000) return true;
+      armado = Date.now();
+      avDesactivar.textContent = 'Pulsa otra vez para confirmar';
+      setTimeout(() => { avDesactivar.textContent = 'Desactivar avisos en este móvil'; }, 4000);
+      return false;
+    }
+
+    async function copiar() {
+      const t = avCodigo.value;
+      if (!t) return;
+      try { await navigator.clipboard.writeText(t); }
+      catch (e) { avCodigo.focus(); avCodigo.select(); document.execCommand && document.execCommand('copy'); }
+      avCopiar.textContent = '✅ Copiado';
+      setTimeout(() => { avCopiar.textContent = '📋 Copiar código'; }, 2500);
+    }
+
+    async function verCodigo() {
+      const cfg = avLeer();
+      const sub = await suscripcion();
+      if (sub && cfg.k && Notification.permission === 'granted') {
+        avCodigo.value = codigoDe(sub, cfg);
+        avCodigoZona.classList.remove('oculto');
+      } else {
+        activar();
+      }
+    }
+
+    campana.addEventListener('click', () => { panel.classList.add('visible'); refrescarPanel(); });
+    document.getElementById('avCerrar').addEventListener('click', () => panel.classList.remove('visible'));
+    panel.addEventListener('click', (e) => { if (e.target === panel) panel.classList.remove('visible'); });
+    avActivar.addEventListener('click', () => (avActivar.textContent === 'Ver mi código' ? verCodigo() : activar()));
+    avProbar.addEventListener('click', probar);
+    avDesactivar.addEventListener('click', desactivar);
+    avCopiar.addEventListener('click', copiar);
+    document.querySelectorAll('#avOpciones input').forEach(c => c.addEventListener('change', cambioPrefs));
+    // Punto verde en la campana si ya están activados
+    if (soportado()) navigator.serviceWorker.ready.then(() => refrescarPanel()).catch(() => {});
   </script>
 </body>
 </html>
