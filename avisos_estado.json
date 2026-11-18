@@ -291,7 +291,11 @@
     "el119_HANDICAP",
     "MM_el119",
     "PROP_el119",
-    "PROP_nba401910002"
+    "PROP_nba401910002",
+    "nba401910004_PUNTOS",
+    "MM_nba401910003",
+    "PROP_nba401910003",
+    "PROP_nba401910004"
    ],
    "iniciado": true
   },
