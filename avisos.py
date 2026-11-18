@@ -33,7 +33,7 @@ DEPORTES = {
 }
 
 ARCHIVO_ESTADO = "avisos_estado.json"
-CONTACTO = os.getenv("PUSH_CONTACTO", "https://apexquantbot.github.io/apex-quant-deportes/")
+CONTACTO = os.getenv("PUSH_CONTACTO", "mailto:lapiruletacafepan@gmail.com")   # el servicio de avisos exige un email «mailto:»
 MAX_SUELTOS = 3          # si hay más alertas nuevas a la vez en un deporte, van juntas en un solo aviso
 TTL = 6 * 3600           # si el móvil está apagado, el aviso se guarda hasta 6 horas
 MEMORIA = 600            # alertas recordadas por deporte (para no repetir avisos)
