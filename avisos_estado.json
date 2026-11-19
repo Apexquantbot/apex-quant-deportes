@@ -337,7 +337,12 @@
     "PROP_nba401910009",
     "nba401910012_PUNTOS",
     "PROP_nba401910011",
-    "PROP_nba401910012"
+    "PROP_nba401910012",
+    "nba401910016_GANADOR",
+    "MM_nba401910014",
+    "PROP_nba401910014",
+    "MM_nba401910016",
+    "PROP_nba401910016"
    ],
    "iniciado": true
   },
