@@ -390,7 +390,10 @@
     "nhl401892741_PL1+",
     "nhl401892740_L25O"
    ],
-   "liquidadas": [],
+   "liquidadas": [
+    "nhl401892739_UT65",
+    "nhl401892740_L25O"
+   ],
    "iniciado": true
   }
  },
