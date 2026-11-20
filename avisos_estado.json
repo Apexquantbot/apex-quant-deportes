@@ -145,7 +145,8 @@
     "558533_DOUBLE_CHANCE_X2",
     "564738_GOLES",
     "560635_GOLES",
-    "560637_DOUBLE_CHANCE_1X"
+    "560637_DOUBLE_CHANCE_1X",
+    "564748_GOLES"
    ],
    "iniciado": true
   },
@@ -407,7 +408,10 @@
     "PROP_el127",
     "el130_PUNTOS",
     "MM_el130",
-    "PROP_el130"
+    "PROP_el130",
+    "el128_PUNTOS",
+    "MM_el128",
+    "PROP_el128"
    ],
    "iniciado": true
   },
