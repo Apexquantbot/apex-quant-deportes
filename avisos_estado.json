@@ -288,7 +288,11 @@
     "nba401909308_PUNTOS",
     "PROP_nba401909306",
     "PROP_nba401909307",
-    "PROP_nba401909308"
+    "PROP_nba401909308",
+    "nba401909309_GANADOR",
+    "PROP_nba401909309",
+    "MM_nba401909310",
+    "PROP_nba401909310"
    ],
    "liquidadas": [
     "PROP_nba401909981",
@@ -479,7 +483,8 @@
     "te187510_SETS",
     "te186801_SET",
     "te186800_SET",
-    "te187513_SET"
+    "te187513_SET",
+    "te186799_SET"
    ],
    "iniciado": true
   },
