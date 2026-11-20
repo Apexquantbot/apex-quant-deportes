@@ -382,7 +382,16 @@
     "MM_el126",
     "PROP_el126",
     "MM_el125",
-    "PROP_el125"
+    "PROP_el125",
+    "nba401910019_PUNTOS",
+    "nba401910021_GANADOR",
+    "MM_nba401910019",
+    "PROP_nba401910019",
+    "MM_nba401910020",
+    "PROP_nba401910020",
+    "PROP_nba401910021",
+    "MM_nba401910022",
+    "PROP_nba401910022"
    ],
    "iniciado": true
   },
