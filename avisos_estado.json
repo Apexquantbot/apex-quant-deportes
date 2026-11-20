@@ -404,7 +404,10 @@
     "MM_nba401910022",
     "PROP_nba401910022",
     "MM_el127",
-    "PROP_el127"
+    "PROP_el127",
+    "el130_PUNTOS",
+    "MM_el130",
+    "PROP_el130"
    ],
    "iniciado": true
   },
@@ -462,7 +465,8 @@
     "te187504_SET",
     "te187510_SETS",
     "te186801_SET",
-    "te186800_SET"
+    "te186800_SET",
+    "te187513_SET"
    ],
    "iniciado": true
   },
