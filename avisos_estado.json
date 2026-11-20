@@ -271,7 +271,10 @@
     "MM_nba401910022",
     "PROP_nba401910022",
     "MM_el127",
-    "PROP_el127"
+    "PROP_el127",
+    "el130_PUNTOS",
+    "MM_el130",
+    "PROP_el130"
    ],
    "liquidadas": [
     "PROP_nba401909981",
