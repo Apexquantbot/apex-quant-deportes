@@ -274,7 +274,10 @@
     "PROP_el127",
     "el130_PUNTOS",
     "MM_el130",
-    "PROP_el130"
+    "PROP_el130",
+    "el128_PUNTOS",
+    "MM_el128",
+    "PROP_el128"
    ],
    "liquidadas": [
     "PROP_nba401909981",
@@ -425,7 +428,8 @@
     "te187504_SET",
     "te187510_SETS",
     "te186801_SET",
-    "te186800_SET"
+    "te186800_SET",
+    "te187513_SET"
    ],
    "liquidadas": [
     "te187511_SETS",
