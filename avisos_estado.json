@@ -477,7 +477,11 @@
     "MM_nba401910024",
     "PROP_nba401910024",
     "nba401910026_HANDICAP",
-    "PROP_nba401910026"
+    "PROP_nba401910026",
+    "nba401910027_HANDICAP",
+    "PROP_nba401910025",
+    "MM_nba401910027",
+    "PROP_nba401910027"
    ],
    "iniciado": true
   },
