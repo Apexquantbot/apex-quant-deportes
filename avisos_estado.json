@@ -354,7 +354,12 @@
     "PROP_nba401910034",
     "nba401910035_PUNTOS",
     "MM_nba401910035",
-    "PROP_nba401910035"
+    "PROP_nba401910035",
+    "nba401910036_HANDICAP",
+    "nba401910037_GANADOR",
+    "MM_nba401910036",
+    "PROP_nba401910036",
+    "PROP_nba401910037"
    ],
    "liquidadas": [
     "PROP_nba401909981",
