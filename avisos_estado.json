@@ -602,7 +602,10 @@
     "PROP_el131",
     "el134_PUNTOS",
     "MM_el134",
-    "PROP_el134"
+    "PROP_el134",
+    "el135_GANADOR",
+    "MM_el135",
+    "PROP_el135"
    ],
    "iniciado": true
   },
