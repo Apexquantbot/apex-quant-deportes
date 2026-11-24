@@ -597,7 +597,9 @@
     "MM_nba401910044",
     "PROP_nba401910044",
     "MM_el132",
-    "PROP_el132"
+    "PROP_el132",
+    "MM_el131",
+    "PROP_el131"
    ],
    "iniciado": true
   },
@@ -677,7 +679,8 @@
     "te186815_GANADOR",
     "te186819_GANADOR",
     "te186820_SET",
-    "te186818_SET"
+    "te186818_SET",
+    "te186826_SET"
    ],
    "iniciado": true
   },
