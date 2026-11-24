@@ -557,7 +557,12 @@
     "PROP_nba401910034",
     "nba401910035_PUNTOS",
     "MM_nba401910035",
-    "PROP_nba401910035"
+    "PROP_nba401910035",
+    "nba401910036_HANDICAP",
+    "nba401910037_GANADOR",
+    "MM_nba401910036",
+    "PROP_nba401910036",
+    "PROP_nba401910037"
    ],
    "iniciado": true
   },
@@ -683,7 +688,8 @@
     "nhl401892769_O55",
     "nhl401892771_ML1",
     "nhl401892770_X2",
-    "nhl401892772_V25O"
+    "nhl401892772_V25O",
+    "nhl401892773_ML1"
    ],
    "iniciado": true
   }
