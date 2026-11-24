@@ -380,7 +380,9 @@
     "MM_nba401910045",
     "PROP_nba401910045",
     "MM_el132",
-    "PROP_el132"
+    "PROP_el132",
+    "MM_el131",
+    "PROP_el131"
    ],
    "liquidadas": [
     "PROP_nba401909981",
@@ -624,7 +626,8 @@
     "te186815_GANADOR",
     "te186819_GANADOR",
     "te186820_SET",
-    "te186818_SET"
+    "te186818_SET",
+    "te186826_SET"
    ],
    "liquidadas": [
     "te187511_SETS",
