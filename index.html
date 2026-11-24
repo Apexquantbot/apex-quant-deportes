@@ -12,15 +12,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     /* ============================================================
-       Apex Quant Deportes (v1.5)
-       Una sola app con cuatro secciones independientes:
+       Apex Quant Deportes (v1.6)
+       Una sola app con cinco secciones independientes:
          - Fútbol     -> la web del bot de fútbol
          - Basket     -> la web del bot de basket
          - Tenis      -> la web del bot de tenis
          - Hockey     -> la web del bot de hockey (NHL)
+         - Snooker    -> la web del bot de snooker
        Cada bot sigue en su propio repositorio, con sus datos,
        su canal de Telegram y su cron. Esta app solo las junta.
-       Botón 🔔: avisos al móvil de los cuatro deportes (avisos.py).
+       Botón 🔔: avisos al móvil de los cinco deportes (avisos.py).
        ============================================================ */
     :root {
       --bg: #070e1d;
@@ -218,6 +219,9 @@
       <button class="pestana" role="tab" data-deporte="hockey" aria-selected="false" title="Hockey">
         <span class="ico">🏒</span><span class="txt">Hockey</span>
       </button>
+      <button class="pestana" role="tab" data-deporte="snooker" aria-selected="false" title="Snooker">
+        <span class="ico">🎱</span><span class="txt">Snooker</span>
+      </button>
     </nav>
     <div class="acciones">
       <button class="recargar campana" id="campana" aria-label="Avisos" title="Avisos al móvil"><span>🔔</span></button>
@@ -244,6 +248,7 @@
         <label><input type="checkbox" value="basket" checked> 🏀 Basket</label>
         <label><input type="checkbox" value="tenis" checked> 🎾 Tenis</label>
         <label><input type="checkbox" value="hockey" checked> 🏒 Hockey</label>
+        <label><input type="checkbox" value="snooker" checked> 🎱 Snooker</label>
         <label class="ancho"><input type="checkbox" id="avResultados" checked> 🏁 Avisar también de los resultados</label>
       </div>
       <div class="botones">
@@ -271,10 +276,11 @@
       futbol:     'https://apexquantbot.github.io/bot-quant-futbol/',
       basket:     'https://apexquantbot.github.io/apex-quant-baloncesto/',
       tenis:      'https://apexquantbot.github.io/apex_quant_tenis/',
-      hockey:     'https://apexquantbot.github.io/apex-quant-hockey/'
+      hockey:     'https://apexquantbot.github.io/apex-quant-hockey/',
+      snooker:    'https://apexquantbot.github.io/apex-quant-snooker/'
     };
-    const TITULOS = { futbol: 'Apex Quant Fútbol', basket: 'Apex Quant Basket', tenis: 'Apex Quant Tenis', hockey: 'Apex Quant Hockey' };
-    const ORDEN = ['futbol', 'basket', 'tenis', 'hockey'];
+    const TITULOS = { futbol: 'Apex Quant Fútbol', basket: 'Apex Quant Basket', tenis: 'Apex Quant Tenis', hockey: 'Apex Quant Hockey', snooker: 'Apex Quant Snooker' };
+    const ORDEN = ['futbol', 'basket', 'tenis', 'hockey', 'snooker'];
     const CLAVE = 'apexDeportes.ultimo';
 
     const zona   = document.getElementById('zona');
@@ -365,7 +371,7 @@
       if (d && d !== actual) abrir(d);
     });
 
-    // Arranque: #futbol / #basket / #tenis / #hockey en la dirección, o la última pestaña usada (#baloncesto sigue valiendo)
+    // Arranque: #futbol / #basket / #tenis / #hockey / #snooker en la dirección, o la última pestaña usada (#baloncesto sigue valiendo)
     const inicial = location.hash.replace('#', '') || leerUltimo() || 'futbol';
     abrir(inicial);
 

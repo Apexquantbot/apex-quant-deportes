@@ -2,7 +2,7 @@
 Apex Quant Deportes — AVISOS AL MÓVIL (notificaciones push de Android)
 
 Cada pocos minutos (lo lanza .github/workflows/avisos.yml):
-  1) Lee el datos.json de los 4 bots (fútbol, basket, tenis y hockey).
+  1) Lee el datos.json de los 5 bots (fútbol, basket, tenis, hockey y snooker).
   2) Busca alertas nuevas y alertas que acaban de terminar (acertada / fallada / anulada).
   3) Las manda como notificación a los móviles que activaron los avisos en la app.
 
@@ -30,6 +30,7 @@ DEPORTES = {
     "basket": {"ico": "🏀", "nombre": "Basket", "repo": "apex-quant-baloncesto"},
     "tenis":  {"ico": "🎾", "nombre": "Tenis",  "repo": "apex_quant_tenis"},
     "hockey": {"ico": "🏒", "nombre": "Hockey", "repo": "apex-quant-hockey"},
+    "snooker": {"ico": "🎱", "nombre": "Snooker", "repo": "apex-quant-snooker"},
 }
 
 ARCHIVO_ESTADO = "avisos_estado.json"

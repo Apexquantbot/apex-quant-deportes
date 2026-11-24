@@ -1,7 +1,7 @@
-// Service Worker - Apex Quant Deportes v1.5
+// Service Worker - Apex Quant Deportes v1.6
 // Guarda la "carcasa" (pestañas e iconos) y recibe los AVISOS al móvil.
-// Las apps de fútbol, basket, tenis y hockey se cargan siempre frescas desde sus propias webs.
-const CACHE_NAME = 'apex-deportes-v1.5.0';
+// Las apps de fútbol, basket, tenis, hockey y snooker se cargan siempre frescas desde sus propias webs.
+const CACHE_NAME = 'apex-deportes-v1.6.0';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
