@@ -599,7 +599,10 @@
     "MM_el132",
     "PROP_el132",
     "MM_el131",
-    "PROP_el131"
+    "PROP_el131",
+    "el134_PUNTOS",
+    "MM_el134",
+    "PROP_el134"
    ],
    "iniciado": true
   },
