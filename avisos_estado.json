@@ -635,7 +635,12 @@
     "MM_el137",
     "PROP_el137",
     "MM_el140",
-    "PROP_el140"
+    "PROP_el140",
+    "el138_GANADOR",
+    "MM_el138",
+    "PROP_el138",
+    "MM_el139",
+    "PROP_el139"
    ],
    "iniciado": true
   },
@@ -721,7 +726,8 @@
     "te186818_SET",
     "te186826_SET",
     "te186839_SET",
-    "te186838_SET"
+    "te186838_SET",
+    "te186837_SET"
    ],
    "iniciado": true
   },
