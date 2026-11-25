@@ -405,7 +405,9 @@
     "PROP_el140",
     "el138_GANADOR",
     "MM_el138",
-    "PROP_el138"
+    "PROP_el138",
+    "MM_el139",
+    "PROP_el139"
    ],
    "liquidadas": [
     "PROP_nba401909981",
@@ -628,7 +630,9 @@
     "nba401909315_HANDICAP",
     "PROP_nba401909315",
     "nba401909316_HANDICAP",
-    "PROP_nba401909316"
+    "PROP_nba401909316",
+    "MM_el137",
+    "PROP_el137"
    ],
    "iniciado": true
   },
