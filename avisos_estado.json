@@ -671,7 +671,10 @@
     "PROP_nba401909321",
     "PROP_nba401909322",
     "nba401909323_PUNTOS",
-    "PROP_nba401909323"
+    "PROP_nba401909323",
+    "nba401909324_PUNTOS",
+    "MM_nba401909324",
+    "PROP_nba401909324"
    ],
    "iniciado": true
   },
@@ -830,7 +833,8 @@
     "nhl401892786_1X",
     "nhl401892785_O45",
     "nhl401892790_OT45",
-    "nhl401892791_ML1"
+    "nhl401892791_ML1",
+    "nhl401892794_O55"
    ],
    "iniciado": true
   },
