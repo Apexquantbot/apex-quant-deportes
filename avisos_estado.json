@@ -717,7 +717,10 @@
     "nba401909329_PUNTOS",
     "PROP_nba401909329",
     "nba401909330_HANDICAP",
-    "PROP_nba401909330"
+    "PROP_nba401909330",
+    "nba401909331_PUNTOS",
+    "MM_nba401909331",
+    "PROP_nba401909331"
    ],
    "iniciado": true
   },
