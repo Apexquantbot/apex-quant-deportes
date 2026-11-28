@@ -442,7 +442,10 @@
     "PROP_nba401909328",
     "PROP_nba401909329",
     "nba401909330_HANDICAP",
-    "PROP_nba401909330"
+    "PROP_nba401909330",
+    "nba401909331_PUNTOS",
+    "MM_nba401909331",
+    "PROP_nba401909331"
    ],
    "liquidadas": [
     "PROP_nba401909981",
@@ -878,7 +881,8 @@
     "nhl401892796_PL2+",
     "nhl401892795_PL2+",
     "nhl401892798_1X",
-    "nhl401892805_ML2"
+    "nhl401892805_ML2",
+    "nhl401892804_O55"
    ],
    "iniciado": true
   },
